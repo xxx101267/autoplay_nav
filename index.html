@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			body{
+				background-size: cover;
+				background-image: url(img/bj8.jpg) ;
+			}
+			ul{
+				margin: 0;
+				padding: 0;
+			}
+			li{
+				list-style: none;
+			}
+			img{
+				border: none;
+				vertical-align: top;
+				width:120px;
+				height:120px;
+			}
+			a{
+				text-decoration: none;
+				color: black;
+			}
+			.clearfix:after{
+				content: "";
+				clear: both;
+				display: block;
+			}
+			.imgbox{
+				width:200px;
+				height:200px;
+				overflow: hidden;
+				float: left;
+			}
+			#wrap{
+				width:516px;
+				margin: 80px auto;
+			}
+			.cont  li ul{
+				float: left;
+				width:300px;
+				height:100%;
+				margin-left: 1px;
+				margin-right: 1px;
+			}
+			.cont{
+				height:120px;
+			}
+			.cont>li{
+				border: 1px solid white;
+				margin-top: -1px;
+				padding:10px;
+				padding-right: 0;
+			}
+			#wrap>div a{
+				float: left;
+				width:170px;
+				height:30px;
+				text-align: center;
+				line-height: 30px;
+				color: white;
+				background-color: rgba(255,255,255,.3);
+			}
+			#wrap>div{
+				height:32px;
+			}
+			.cont>li li{
+				margin-bottom: 1px;
+				height:66px;
+				line-height: 40px;
+				background-color: rgba(255,255,255,.3);
+			}
+			#wrap .textActive{
+				background-color: #fca947;
+				color: white;
+				font-weight: bold;
+			}
+			.cont>li li a{
+				margin-left: 5px;
+				line-height: 67px;
+				color: white;
+			}
+			.cont>li img{
+				width:200px;
+				height:200px;
+			}
+			#wrap .active{
+				background-color: #fca947;
+				position: relative;
+				z-index: 2;
+				font-weight: bold;
+				color: white;
+			}
+			.cont>li{
+				display: none;
+			}
+			.imgbox a{
+				display: none;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div class="clearfix">
+				<a href="javascript:;" class="active">男装</a>
+				<a href="javascript:;">女包</a>
+			</div>
+			<ul class="cont clearfix">
+				<li style="display: block;" class="clearfix">
+					<div class="imgbox">
+						<a href="javascript:;" style="display: block;">
+							<img src="img/d.jpg" />
+						</a>
+						<a href="javascript:;">
+							<img src="img/f.jpg" />
+						</a>
+						<a href="javascript:;">
+							<img src="img/s.jpg" />
+						</a>
+					</div>
+					<ul>
+						<li  class="textActive">
+							<a href="javascript:;">独家混色雪花复古毛宽松针织衫</a>
+						</li>
+						<li>
+							<a href="javascript:;">秋冬季新款牛仔裤男士韩版潮男</a>
+						</li>
+						<li>
+							<a href="javascript:;">秋冬新款文艺小清新束脚裤潮</a>
+						</li>
+					</ul>
+				</li>
+				
+				<li  class="clearfix">
+					<div class="imgbox">
+						<a href="javascript:;" style="display: block;">
+							<img src="img/x.jpg" />
+						</a>
+						<a href="javascript:;">
+							<img src="img/z.jpg" />
+						</a>
+						<a href="javascript:;">
+							<img src="img/c.jpg" />
+						</a>
+					</div>
+					<ul>
+						<li>
+							<a href="javascript:;">2016新款挎包女式时尚潮</a>
+						</li>
+						<li>
+							<a href="javascript:;">冬季新款欧美时尚单肩斜挎包潮</a>
+						</li>
+						<li>
+							<a href="javascript:;">韩国链条小包包MINI小提包潮</a>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+		
+		
+		<script>
+			var titleBts=document.querySelectorAll("#wrap>div a");//标题a标签获取
+			var contLis=document.querySelectorAll(".cont>li");//获取内容中2个大的li
+			var contTexts=document.querySelectorAll(".cont>li li");//获取内容部分每条文字
+			var contImgs=document.querySelectorAll(".imgbox a");//内容所有图片
+			var wrap=document.getElementById("wrap");//获取最外层wrap，用于停止定时器
+			
+			var timer=null;
+			var imgNum=0;
+			
+			//封装函数-----------------------------------------
+			//循环样式封装
+			function xhStyle(num){
+				//清空内容的2个box  和  标题样式
+				for(var i=0;i<titleBts.length;i++){
+					contLis[i].style.display="none";
+					titleBts[i].className="none";
+				}
+				//标题和对应的内容box
+				contLis[num].style.display="block";
+				titleBts[num].className="active";
+				
+				overStyle(num*3);//
+			}
+			
+			//内容标题移入样式
+			for(var i=0;i<contTexts.length;i++){
+				contTexts[i].index=i;
+				contTexts[i].onmouseover=function(){
+					imgNum=this.index;
+					overStyle(this.index);
+				}
+			}
+			//内容文字onmouseover时样式
+			function overStyle(a){
+				//先清空
+				for(var i=0;i<contTexts.length;i++){
+					contTexts[i].className="none";
+					contImgs[i].style.display="none";
+				}
+				//文字样式  和 图片显示
+				contTexts[a].className="textActive";
+				contImgs[a].style.display="block";
+			}
+			//封装函数-----------------------------------------
+			
+			
+			//标题点击切换
+			for(var i=0;i<titleBts.length;i++){
+				titleBts[i].index=i;
+				titleBts[i].onclick=function(){
+					xhStyle(this.index);
+					imgNum = this.index*3;
+				}
+			}
+			
+			//定时器循环
+			timer=setInterval(timerFn,1000);
+			//定时器1秒执行的函数--封装
+			function timerFn(){
+				imgNum++;
+				if(imgNum>contTexts.length-1){
+					imgNum=0;
+				}
+				if(imgNum>2){
+					xhStyle(1);
+				}else{
+					xhStyle(0);							
+				}
+				overStyle(imgNum);
+			}
+			
+			//停止定时器
+			wrap.onmouseover=function(){
+				clearInterval(timer);
+			}
+			//开启定时器
+			wrap.onmouseout=function(){
+				timer=setInterval(timerFn,1000);
+			}
+		</script>
+	</body>
+</html>
